@@ -6,8 +6,13 @@ pipeline {
   triggers {
       pollSCM('* * * * *')
   }
-
+  
    stages {
+      stage('Clean Workspace') {
+            steps {
+                cleanWs() // Requires the Workspace Cleanup Plugin
+            }
+      }
       stage('Clone Sources') {
         steps {
           checkout scm
