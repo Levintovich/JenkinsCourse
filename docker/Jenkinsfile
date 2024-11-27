@@ -1,5 +1,11 @@
+
 pipeline {
-  agent any
+  agent { node { label 'Jenkins_Slave1' } }
+  
+  parameters { 
+      string(name: 'NAME', defaultValue: 'John', description: 'The parameter from Groovy')
+      string(name: 'REPO_NAME', defaultValue: 'levintovich', description: 'The parameter from Groovy')        	  
+  }
 
    stages {
       stage('Clone Sources') {
