@@ -3,9 +3,9 @@ pipeline {
   parameters { 
       string(name: 'PARAM', defaultValue: 'test', description: 'The parameter from Groovy') 
   }
-  options(
-      [pipelineTriggers([pollSCM('* * * * *')])]
-  )
+  triggers {
+      pollSCM('* * * * *')
+  }
 
    stages {
       stage('Clone Sources') {
