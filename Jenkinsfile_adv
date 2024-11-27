@@ -43,7 +43,8 @@ pipeline {
             echo 'Deployment process..'
             sh '''
               echo "Testing input string $PARAM" 
-              cd "${WORKSPACE}/scripts"              
+              cd "${WORKSPACE}/scripts"
+              dos2unix checkUserName.py
               ./checkUserName.py $PARAM >> results
             '''
          }
