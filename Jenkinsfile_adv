@@ -13,6 +13,13 @@ pipeline {
           checkout scm
         } 
       }
+      stage('Clone another repo') {
+        steps {
+          sh '''
+                git clone https://github.com/Levintovich/GitCourse.git
+            '''
+        } 
+      }
       stage('Build') {
          steps {
             echo 'Build process..'            
