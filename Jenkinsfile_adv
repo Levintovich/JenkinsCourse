@@ -1,5 +1,8 @@
 pipeline {
   agent { node { label 'Jenkins_Slave1' } }
+  parameters { 
+      string(name: 'PARAM', defaultValue: 'test', description: 'The parameter from Groovy') 
+  }
 
    stages {
       stage('Clone Sources') {
