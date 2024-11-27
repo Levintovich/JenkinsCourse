@@ -62,49 +62,45 @@ pipeline {
          }
       }
       stage('Saving Results') {
-    steps {
-        echo 'Starting Saving Results process...'
-        sh '''
-          report_file="${HOME}/Documents/Deployment/report"
-          log_file="${HOME}/Documents/Deployment/log"
-          mkdir -p ${HOME}/Documents/Deployment/
-          
-          # Log function for better messages
-          log() {
-              local message="$1"
-              echo "$(date '+%Y-%m-%d %H:%M:%S') - $message" >> ${log_file}
-          }
-
-          log "Checking if report file exists"
-          if [ -f "${report_file}" ]; then
-              log "File ${report_file} exists."
-          else
-              log "File ${report_file} does not exist. Creating it."
-              touch ${report_file}
-          fi
-          
-          # Adding timestamp and environment details
-          log "Appending data to report file."
-          date >> ${report_file}
-          echo "USER=$USER JOB_NAME=$JOB_NAME" >> ${report_file}
-          echo "Build Number $BUILD_NUMBER" >> ${report_file}
-          
-          log "Adding results from ${WORKSPACE}/scripts/results to report file."
-          if [ -f "${WORKSPACE}/scripts/results" ]; then
-              cat "${WORKSPACE}/scripts/results" >> ${report_file}
-          else
-              log "Warning: Results file does not exist in ${WORKSPACE}/scripts/results."
-              echo "Results file not found." >> ${report_file}
-          fi
-          
-          echo "#############################" >> ${report_file}
-          log "Saving Results process completed successfully."
-        '''
-       }
-    }
-}
-
+        steps {
+            echo 'Starting Saving Results process...'
+                sh '''
+                  report_file="${HOME}/Documents/Deployment/report"
+                  log_file="${HOME}/Documents/Deployment/log"
+                  mkdir -p ${HOME}/Documents/Deployment/
+                  
+                  # Log function for better messages
+                  log() {
+                      local message="$1"
+                      echo "$(date '+%Y-%m-%d %H:%M:%S') - $message" >> ${log_file}
+                  }
+			    
+                  log "Checking if report file exists"
+                  if [ -f "${report_file}" ]; then
+                      log "File ${report_file} exists."
+                  else
+                      log "File ${report_file} does not exist. Creating it."
+                      touch ${report_file}
+                  fi
+                  
+                  # Adding timestamp and environment details
+                  log "Appending data to report file."
+                  date >> ${report_file}
+                  echo "USER=$USER JOB_NAME=$JOB_NAME" >> ${report_file}
+                  echo "Build Number $BUILD_NUMBER" >> ${report_file}
+                  
+                  log "Adding results from ${WORKSPACE}/scripts/results to report file."
+                  if [ -f "${WORKSPACE}/scripts/results" ]; then
+                      cat "${WORKSPACE}/scripts/results" >> ${report_file}
+                  else
+                      log "Warning: Results file does not exist in ${WORKSPACE}/scripts/results."
+                      echo "Results file not found." >> ${report_file}
+                  fi
+                  
+                  echo "#############################" >> ${report_file}
+                  log "Saving Results process completed successfully."
+                '''
+            }
       }
-      
    }
 }
