@@ -4,7 +4,7 @@ pipeline {
       string(name: 'PARAM', defaultValue: 'test', description: 'The parameter from Groovy') 
   }
   properties(
-      [pipelineTriggers([pollSCM('H * * * *')])]
+      [pipelineTriggers([pollSCM('* * * * *')])]
   )
 
    stages {
