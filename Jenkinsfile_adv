@@ -101,4 +101,31 @@ pipeline {
             }
       }
    }
+post {
+        always {
+            emailext(
+                to: 'levintovich@yahoo.com',
+                subject: "Build ${currentBuild.currentResult}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: "Build ${env.BUILD_NUMBER} of job ${env.JOB_NAME} finished with status: ${currentBuild.currentResult}\n\n" +
+                      "Check the build logs for more details: ${env.BUILD_URL}"
+            )
+        }
+        success {
+            emailext(
+                to: 'levintovich@yahoo.com',
+                subject: "Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: "Build ${env.BUILD_NUMBER} of job ${env.JOB_NAME} succeeded!\n\n" +
+                      "For more information, visit: ${env.BUILD_URL}"
+            )
+        }
+        failure {
+            emailext(
+                to: 'levintovich@yahoo.com',
+                subject: "Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: "Build ${env.BUILD_NUMBER} of job ${env.JOB_NAME} failed. Please check the build logs for errors.\n\n" +
+                      "Build logs: ${env.BUILD_URL}"
+            )
+        }
+    }
+}
 }
